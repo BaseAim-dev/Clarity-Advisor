@@ -33,6 +33,109 @@ if (header) {
 }
 
 /* ============================================================
+   HERO STATS — count-up with ease-out deceleration
+   ============================================================ */
+(function () {
+  function easeOutQuart(t) {
+    return 1 - Math.pow(1 - t, 4);
+  }
+
+  function runCounter(el) {
+    const target   = parseFloat(el.dataset.target);
+    const prefix   = el.dataset.prefix   || '';
+    const suffix   = el.dataset.suffix   || '';
+    const decimals = parseInt(el.dataset.decimals) || 0;
+    const duration = 2200;
+    const start    = performance.now();
+
+    function tick(now) {
+      const elapsed  = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const value    = easeOutQuart(progress) * target;
+      el.textContent = prefix + value.toFixed(decimals) + suffix;
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  const heroStats = document.querySelector('.hero-stats');
+  if (!heroStats) return;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (!entry.isIntersecting) return;
+      observer.disconnect();
+      setTimeout(() => {
+        heroStats.querySelectorAll('.hero-stat-val[data-target]').forEach(runCounter);
+      }, 350);
+    },
+    { threshold: 0.6 }
+  );
+  observer.observe(heroStats);
+})();
+
+/* ============================================================
+   OLD WAY / NEW WAY — directional reveal animation
+   ============================================================ */
+const vp1Section = document.querySelector('.vp1-section');
+if (vp1Section) {
+  new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        vp1Section.classList.add('is-visible');
+      }
+    },
+    { threshold: 0.12 }
+  ).observe(vp1Section);
+}
+
+/* ============================================================
+   SOCIAL PROOF — staggered entrance animation
+   ============================================================ */
+const proofSection = document.querySelector('.proof-section');
+if (proofSection) {
+  new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        proofSection.classList.add('is-visible');
+      }
+    },
+    { threshold: 0.08 }
+  ).observe(proofSection);
+}
+
+/* ============================================================
+   WHEN TIMING MATTERS — scroll-triggered card entrance
+   ============================================================ */
+const whoSection = document.querySelector('.who-section');
+if (whoSection) {
+  new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        whoSection.classList.add('is-visible');
+      }
+    },
+    { threshold: 0.12 }
+  ).observe(whoSection);
+}
+
+/* ============================================================
+   HOW IT WORKS — scroll-triggered timeline animation
+   ============================================================ */
+const howSteps = document.querySelector('.how-steps');
+if (howSteps) {
+  new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        howSteps.classList.add('is-visible');
+      }
+    },
+    { threshold: 0.15 }
+  ).observe(howSteps);
+}
+
+/* ============================================================
    SMOOTH SCROLL for all internal anchor links
    ============================================================ */
 document.querySelectorAll('a[href^="#"]').forEach(link => {
