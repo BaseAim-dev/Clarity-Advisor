@@ -2,9 +2,8 @@
    CTA MODAL FORM
    ============================================================ */
 (function () {
-  const modal   = document.getElementById('cta-modal');
-  const form    = document.getElementById('cta-form');
-  const success = document.getElementById('cta-form-success');
+  const modal = document.getElementById('cta-modal');
+  const form  = document.getElementById('cta-form');
 
   function openModal() {
     modal.classList.add('is-open');
@@ -57,13 +56,40 @@
     });
   });
 
+  const GHL_WEBHOOK = 'https://services.leadconnectorhq.com/hooks/OgNkyxOT5jOvbkaU5DdM/webhook-trigger/84a02646-f320-432a-a28a-ac9c4e099212';
+
   form.addEventListener('submit', e => {
     e.preventDefault();
     const valid = Object.keys(fields).map(id => validate(id)).every(Boolean);
     if (!valid) return;
-    const name  = encodeURIComponent(fields.name.el.value.trim());
-    const email = encodeURIComponent(fields.email.el.value.trim());
-    window.location.href = 'booking.html?name=' + name + '&email=' + email;
+
+    const submitBtn = form.querySelector('.cta-form-submit');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+
+    const fullName  = fields.name.el.value.trim();
+    const nameParts = fullName.split(/\s+/);
+    const email     = fields.email.el.value.trim();
+    const phone     = fields.phone.el.value.trim();
+    const bizType   = document.getElementById('f-type').value || '';
+
+    const payload = new URLSearchParams({
+      first_name:    nameParts[0] || fullName,
+      last_name:     nameParts.slice(1).join(' ') || '',
+      email:         email,
+      phone:         phone,
+      business_type: bizType,
+      source:        'Landing Page — Free Review Form',
+    });
+
+    // sendBeacon: fire-and-forget, bypasses CORS, works even during page navigation
+    const sent = typeof navigator.sendBeacon === 'function' && navigator.sendBeacon(GHL_WEBHOOK, payload);
+    if (!sent) {
+      // Fallback for browsers without sendBeacon
+      fetch(GHL_WEBHOOK, { method: 'POST', mode: 'no-cors', body: payload }).catch(() => {});
+    }
+
+    window.location.href = 'booking.html?name=' + encodeURIComponent(fullName) + '&email=' + encodeURIComponent(email);
   });
 })();
 
