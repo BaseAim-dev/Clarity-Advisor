@@ -89,6 +89,11 @@
       fetch(GHL_WEBHOOK, { method: 'POST', mode: 'no-cors', body: blob }).catch(() => {});
     }
 
+    // Meta Pixel — fire Lead conversion before redirect
+    if (typeof fbq === 'function') {
+      fbq('track', 'Lead', { content_name: 'Free Tax Review' });
+    }
+
     window.location.href = 'booking.html?name=' + encodeURIComponent(fullName) + '&email=' + encodeURIComponent(email);
   });
 })();

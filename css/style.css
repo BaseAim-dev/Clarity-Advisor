@@ -510,6 +510,7 @@ p  { color: var(--col-muted); font-size: 1.05rem; line-height: 1.75; }
   gap: 52px;
   width: max-content;
   animation: cred-scroll 24s linear infinite;
+  will-change: transform;
 }
 
 .credentials-marquee:hover .credentials-track {
@@ -540,6 +541,8 @@ p  { color: var(--col-muted); font-size: 1.05rem; line-height: 1.75; }
 .proof-section {
   background: #ffffff;
   padding-block: var(--section-py);
+  content-visibility: auto;
+  contain-intrinsic-size: 0 600px;
 }
 
 .proof-section .label { color: var(--col-gold); }
@@ -726,7 +729,11 @@ p  { color: var(--col-muted); font-size: 1.05rem; line-height: 1.75; }
 /* ============================================================
    VALUE PROP #1 — COMPARE GRID
    ============================================================ */
-.vp1-section { background: var(--col-bg); }
+.vp1-section {
+  background: var(--col-bg);
+  content-visibility: auto;
+  contain-intrinsic-size: 0 700px;
+}
 
 .vp1-section .section-intro {
   text-align: center;
@@ -949,6 +956,8 @@ p  { color: var(--col-muted); font-size: 1.05rem; line-height: 1.75; }
   background: #000000;
   position: relative;
   overflow: hidden;
+  content-visibility: auto;
+  contain-intrinsic-size: 0 620px;
 }
 
 .who-section::before {
@@ -1156,7 +1165,11 @@ p  { color: var(--col-muted); font-size: 1.05rem; line-height: 1.75; }
 /* ============================================================
    SECTION — HOW IT WORKS  (vertical timeline)
    ============================================================ */
-.how-section { background: var(--col-bg-card); }
+.how-section {
+  background: var(--col-bg-card);
+  content-visibility: auto;
+  contain-intrinsic-size: 0 600px;
+}
 
 .how-intro {
   text-align: center;
@@ -1297,7 +1310,11 @@ p  { color: var(--col-muted); font-size: 1.05rem; line-height: 1.75; }
 /* ============================================================
    SECTION — FAQ
    ============================================================ */
-.faq-section { background: var(--col-bg); }
+.faq-section {
+  background: var(--col-bg);
+  content-visibility: auto;
+  contain-intrinsic-size: 0 700px;
+}
 
 .faq-section h2 {
   text-align: center;
@@ -1365,6 +1382,8 @@ p  { color: var(--col-muted); font-size: 1.05rem; line-height: 1.75; }
 .final-cta {
   background: var(--col-bg-card);
   border-top: 1px solid var(--col-border);
+  content-visibility: auto;
+  contain-intrinsic-size: 0 550px;
 }
 
 .final-cta-inner {
@@ -1755,4 +1774,31 @@ p  { color: var(--col-muted); font-size: 1.05rem; line-height: 1.75; }
 
 @media (max-width: 420px) {
   .header-phone span { display: none; }
+}
+
+/* ============================================================
+   REDUCED MOTION — disable heavy animations for accessibility
+   and performance on low-power devices
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .credentials-track            { animation: none; }
+  .btn-coral                    { animation: none; }
+  .who-outcome-dot              { animation: none; }
+  .how-line-fill                { transition: none; }
+  .who-card,
+  .how-step,
+  .proof-section .label,
+  .proof-section h2,
+  .proof-section .proof-subhead,
+  .proof-section .testi-card,
+  .proof-section .cta-block,
+  .vp1-section .section-intro,
+  .vp1-section .compare-col--old,
+  .vp1-section .compare-col--new,
+  .vp1-section .compare-badge,
+  .vp1-section .compare-col--old .compare-list li,
+  .vp1-section .compare-col--new .compare-list li,
+  .vp1-section .cta-block       { opacity: 1; transform: none; transition: none; }
+  .how-step-dot                 { transform: scale(1); transition: none; }
+  *, *::before, *::after        { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }

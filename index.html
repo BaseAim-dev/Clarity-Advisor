@@ -23,10 +23,43 @@
 
   <title>Company Name — [Tagline]</title>
 
-  <!-- Google Fonts -->
+  <!-- ============================================================
+       GA4 — add once your domain is live
+       Replace G-XXXXXXXXXX with your Measurement ID
+       ============================================================ -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script> -->
+
+  <!-- ============================================================
+       META PIXEL — 3267634206858309
+       ============================================================ -->
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '3267634206858309');
+    fbq('track', 'PageView');
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=3267634206858309&ev=PageView&noscript=1" alt="" />
+  </noscript>
+
+  <!-- Preload LCP image (logo) -->
+  <link rel="preload" as="image" href="assets/images/logo-upscaled.png" fetchpriority="high" />
+
+  <!-- Google Fonts — non-blocking -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" /></noscript>
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="css/style.css" />
@@ -40,7 +73,7 @@
     <div class="header-inner">
 
       <a href="#" class="logo">
-        <img src="assets/images/logo-upscaled.png" alt="Clarity Advisor" class="logo-img" />
+        <img src="assets/images/logo-upscaled.png" alt="Clarity Advisor" class="logo-img" width="309" height="191" fetchpriority="high" />
       </a>
 
       <div class="header-right">
@@ -75,11 +108,11 @@
 
             <!-- Overlapping avatars -->
             <div class="greviews-avatars">
-              <img src="assets/images/r1.png" alt="Google reviewer" class="greviews-avatar" />
-              <img src="assets/images/r2.png" alt="Google reviewer" class="greviews-avatar" />
-              <img src="assets/images/r3.png" alt="Google reviewer" class="greviews-avatar" />
-              <img src="assets/images/r4.png" alt="Google reviewer" class="greviews-avatar" />
-              <img src="assets/images/r5.png" alt="Google reviewer" class="greviews-avatar" />
+              <img src="assets/images/r1.png" alt="Google reviewer" class="greviews-avatar" width="22" height="22" decoding="async" />
+              <img src="assets/images/r2.png" alt="Google reviewer" class="greviews-avatar" width="22" height="22" decoding="async" />
+              <img src="assets/images/r3.png" alt="Google reviewer" class="greviews-avatar" width="22" height="22" decoding="async" />
+              <img src="assets/images/r4.png" alt="Google reviewer" class="greviews-avatar" width="22" height="22" decoding="async" />
+              <img src="assets/images/r5.png" alt="Google reviewer" class="greviews-avatar" width="22" height="22" decoding="async" />
             </div>
 
             <div class="greviews-divider"></div>
@@ -136,18 +169,18 @@
       <!-- Track duplicated so scroll loops seamlessly -->
       <div class="credentials-track">
 
-        <img src="assets/images/cred-tpb.png"       alt="Tax Practitioners Board Registered" class="cred-logo cred-logo--badge" />
-        <img src="assets/images/cred-xero.png"      alt="Xero Certified Advisor"             class="cred-logo" />
-        <img src="assets/images/cred-cpa.png"       alt="CPA Australia"                      class="cred-logo" />
-        <img src="assets/images/cred-caanz.webp"    alt="Chartered Accountants ANZ"          class="cred-logo" />
-        <img src="assets/images/cred-ezzybills.png" alt="EzzyBills"                          class="cred-logo" />
+        <img src="assets/images/cred-tpb.png"       alt="Tax Practitioners Board Registered" class="cred-logo cred-logo--badge" loading="lazy" decoding="async" />
+        <img src="assets/images/cred-xero.png"      alt="Xero Certified Advisor"             class="cred-logo" loading="lazy" decoding="async" />
+        <img src="assets/images/cred-cpa.png"       alt="CPA Australia"                      class="cred-logo" loading="lazy" decoding="async" />
+        <img src="assets/images/cred-caanz.webp"    alt="Chartered Accountants ANZ"          class="cred-logo" loading="lazy" decoding="async" />
+        <img src="assets/images/cred-ezzybills.png" alt="EzzyBills"                          class="cred-logo" loading="lazy" decoding="async" />
 
         <!-- duplicate set for seamless loop -->
-        <img src="assets/images/cred-tpb.png"       alt="" class="cred-logo cred-logo--badge" aria-hidden="true" />
-        <img src="assets/images/cred-xero.png"      alt="" class="cred-logo"                  aria-hidden="true" />
-        <img src="assets/images/cred-cpa.png"       alt="" class="cred-logo"                  aria-hidden="true" />
-        <img src="assets/images/cred-caanz.webp"    alt="" class="cred-logo"                  aria-hidden="true" />
-        <img src="assets/images/cred-ezzybills.png" alt="" class="cred-logo"                  aria-hidden="true" />
+        <img src="assets/images/cred-tpb.png"       alt="" class="cred-logo cred-logo--badge" aria-hidden="true" loading="lazy" decoding="async" />
+        <img src="assets/images/cred-xero.png"      alt="" class="cred-logo"                  aria-hidden="true" loading="lazy" decoding="async" />
+        <img src="assets/images/cred-cpa.png"       alt="" class="cred-logo"                  aria-hidden="true" loading="lazy" decoding="async" />
+        <img src="assets/images/cred-caanz.webp"    alt="" class="cred-logo"                  aria-hidden="true" loading="lazy" decoding="async" />
+        <img src="assets/images/cred-ezzybills.png" alt="" class="cred-logo"                  aria-hidden="true" loading="lazy" decoding="async" />
 
       </div>
     </div>
@@ -169,7 +202,7 @@
           <div class="testi-top">
             <div class="testi-avatar-wrap">
               <div class="testi-avatar-ph">
-                <img src="assets/images/r1.png" alt="Pham Thi Kim Dung">
+                <img src="assets/images/r1.png" alt="Pham Thi Kim Dung" loading="lazy" decoding="async" />
               </div>
               <div class="testi-meta">
                 <span class="testi-name">Pham Thi Kim Dung</span>
@@ -186,7 +219,7 @@
           <div class="testi-top">
             <div class="testi-avatar-wrap">
               <div class="testi-avatar-ph">
-                <img src="assets/images/r3.png" alt="Dion Nguyen">
+                <img src="assets/images/r3.png" alt="Dion Nguyen" loading="lazy" decoding="async" />
               </div>
               <div class="testi-meta">
                 <span class="testi-name">Dion Nguyen</span>
@@ -203,7 +236,7 @@
           <div class="testi-top">
             <div class="testi-avatar-wrap">
               <div class="testi-avatar-ph">
-                <img src="assets/images/r5.png" alt="Ngoc Dien Phung">
+                <img src="assets/images/r5.png" alt="Ngoc Dien Phung" loading="lazy" decoding="async" />
               </div>
               <div class="testi-meta">
                 <span class="testi-name">Ngoc Dien Phung</span>
@@ -587,7 +620,7 @@
   <footer class="site-footer">
     <div class="footer-inner">
       <a href="#" class="footer-logo-link">
-        <img src="assets/images/logo-upscaled.png" alt="Clarity Advisor" class="footer-logo-img" />
+        <img src="assets/images/logo-upscaled.png" alt="Clarity Advisor" class="footer-logo-img" loading="lazy" decoding="async" />
       </a>
       <nav class="footer-links" aria-label="Footer navigation">
         <a href="#">Privacy Policy</a>
@@ -655,6 +688,6 @@
   </div>
 
   <!-- JavaScript -->
-  <script src="js/main.js"></script>
+  <script src="js/main.js" defer></script>
 </body>
 </html>
