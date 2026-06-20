@@ -23,7 +23,6 @@
     email: { el: document.getElementById('f-email'), err: document.getElementById('err-email') },
   };
 
-  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   const phoneRe = /^(\+?61|0)[2-9]\d{8}$|^(\+?61|0)4\d{8}$/;
 
   function validate(id) {
@@ -35,8 +34,9 @@
       if (!val) msg = 'Please enter your full name.';
       else if (val.length < 2) msg = 'Name must be at least 2 characters.';
     } else if (id === 'email') {
+      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!val) msg = 'Please enter your email address.';
-      else if (!emailRe.test(val)) msg = 'Please enter a valid email (e.g. jane@business.com.au).';
+      else if (!emailRe.test(val)) msg = 'Please enter a valid email address (e.g. name@example.com).';
     } else if (id === 'phone') {
       const digits = val.replace(/[\s\-().]/g, '');
       if (!digits) msg = 'Please enter your phone number.';
@@ -56,7 +56,7 @@
     });
   });
 
-  const GHL_WEBHOOK = 'https://services.leadconnectorhq.com/hooks/OgNkyxOT5jOvbkaU5DdM/webhook-trigger/84a02646-f320-432a-a28a-ac9c4e099212';
+  const GHL_WEBHOOK = 'https://services.leadconnectorhq.com/hooks/OgNkyxOT5jOvbkaU5DdM/webhook-trigger/d199bff8-2df9-428a-989d-aee2156f3e35';
 
   form.addEventListener('submit', e => {
     e.preventDefault();
@@ -73,7 +73,7 @@
     const phone     = fields.phone.el.value.trim();
     const bizType   = document.getElementById('f-type').value || '';
 
-    const payload = new URLSearchParams({
+    const payload = JSON.stringify({
       first_name:    nameParts[0] || fullName,
       last_name:     nameParts.slice(1).join(' ') || '',
       email:         email,
@@ -82,11 +82,11 @@
       source:        'Landing Page — Free Review Form',
     });
 
-    // sendBeacon: fire-and-forget, bypasses CORS, works even during page navigation
-    const sent = typeof navigator.sendBeacon === 'function' && navigator.sendBeacon(GHL_WEBHOOK, payload);
+    // Send as text/plain Blob — no CORS preflight, but body is valid JSON for GHL to map
+    const blob = new Blob([payload], { type: 'text/plain' });
+    const sent = typeof navigator.sendBeacon === 'function' && navigator.sendBeacon(GHL_WEBHOOK, blob);
     if (!sent) {
-      // Fallback for browsers without sendBeacon
-      fetch(GHL_WEBHOOK, { method: 'POST', mode: 'no-cors', body: payload }).catch(() => {});
+      fetch(GHL_WEBHOOK, { method: 'POST', mode: 'no-cors', body: blob }).catch(() => {});
     }
 
     window.location.href = 'booking.html?name=' + encodeURIComponent(fullName) + '&email=' + encodeURIComponent(email);
