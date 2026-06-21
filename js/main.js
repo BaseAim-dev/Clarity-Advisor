@@ -84,6 +84,7 @@
       revenue_range: revenue,
       challenge:     challenge,
       source:        'Landing Page — Free Review Form',
+      funnel_stage:  'Lead',
     });
 
     // GHL supports CORS (access-control-allow-origin: *) so send as proper JSON

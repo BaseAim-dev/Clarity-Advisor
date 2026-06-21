@@ -73,7 +73,11 @@
   </main>
 
   <script>
-    // Redirect to thank you page when GHL booking widget confirms a booking
+    // Carry email + name from form URL params through to thank you page
+    var _params  = new URLSearchParams(window.location.search);
+    var _email   = _params.get('email') || '';
+    var _name    = _params.get('name')  || '';
+
     window.addEventListener('message', function (e) {
       var d = e.data;
       if (
@@ -86,7 +90,7 @@
           d.type  === 'appointmentBooked'
         ))
       ) {
-        window.location.href = '../thankyou/';
+        window.location.href = '../thankyou/?email=' + encodeURIComponent(_email) + '&name=' + encodeURIComponent(_name);
       }
     });
   </script>

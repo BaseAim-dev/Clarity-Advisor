@@ -236,6 +236,30 @@
     </div>
   </main>
 
+  <script>
+    // Fire GHL "Booked" webhook using email carried from the booking page
+    (function () {
+      var params    = new URLSearchParams(window.location.search);
+      var email     = params.get('email') || '';
+      var nameFull  = params.get('name')  || '';
+      var nameParts = nameFull.trim().split(/\s+/);
+
+      if (!email) return;
+
+      fetch('https://services.leadconnectorhq.com/hooks/OgNkyxOT5jOvbkaU5DdM/webhook-trigger/e56cfc7e-104f-48d5-86ae-cd6cf4d9f8c3', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          first_name:   nameParts[0] || nameFull,
+          last_name:    nameParts.slice(1).join(' ') || '',
+          email:        email,
+          funnel_stage: 'Booked',
+          source:       'Landing Page — Booking Confirmed',
+        }),
+      }).catch(function () {});
+    })();
+  </script>
+
   <footer class="ty-footer">
     &copy; 2026 Clarity Advisor. All Rights Reserved.
   </footer>
