@@ -72,5 +72,23 @@
     </div>
   </main>
 
+  <script>
+    // Redirect to thank you page when GHL booking widget confirms a booking
+    window.addEventListener('message', function (e) {
+      var d = e.data;
+      if (
+        d === 'booking_confirmed' ||
+        d === 'appointmentBooked' ||
+        (d && typeof d === 'object' && (
+          d.event === 'booking_confirmed' ||
+          d.event === 'appointmentBooked' ||
+          d.type  === 'booking_confirmed' ||
+          d.type  === 'appointmentBooked'
+        ))
+      ) {
+        window.location.href = '../thankyou/';
+      }
+    });
+  </script>
 </body>
 </html>
