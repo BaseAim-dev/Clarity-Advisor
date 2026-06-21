@@ -56,7 +56,7 @@
     });
   });
 
-  const GHL_WEBHOOK = 'https://services.leadconnectorhq.com/hooks/OgNkyxOT5jOvbkaU5DdM/webhook-trigger/d199bff8-2df9-428a-989d-aee2156f3e35';
+  const GHL_WEBHOOK = 'https://services.leadconnectorhq.com/hooks/OgNkyxOT5jOvbkaU5DdM/webhook-trigger/84a02646-f320-432a-a28a-ac9c4e099212';
 
   form.addEventListener('submit', e => {
     e.preventDefault();
