@@ -83,10 +83,12 @@
           var iframe = document.getElementById('O4sOXXeLuFvCYic2BkXA_1781946906827');
           var base   = 'https://crm.clarityadvisor.au/widget/booking/O4sOXXeLuFvCYic2BkXA';
           var params = new URLSearchParams({
-            first_name: firstName,
-            last_name:  lastName,
-            email:      email,
-            phone:      phone,
+            first_name:   firstName,
+            last_name:    lastName,
+            email:        email,
+            phone:        phone,
+            phone_number: phone,
+            phoneNumber:  phone,
           });
           iframe.src = base + '?' + params.toString();
         })();
