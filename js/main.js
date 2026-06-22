@@ -99,7 +99,7 @@
       fbq('track', 'Lead', { content_name: 'Free Tax Review' });
     }
 
-    window.location.href = 'booking.html?name=' + encodeURIComponent(fullName) + '&email=' + encodeURIComponent(email);
+    window.location.href = 'booking.html?name=' + encodeURIComponent(fullName) + '&email=' + encodeURIComponent(email) + '&phone=' + encodeURIComponent(phone);
   });
 })();
 

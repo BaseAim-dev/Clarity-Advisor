@@ -68,6 +68,29 @@
         <iframe src="https://crm.clarityadvisor.au/widget/booking/O4sOXXeLuFvCYic2BkXA" style="width:100%;border:none;overflow:hidden;" scrolling="no" id="O4sOXXeLuFvCYic2BkXA_1781946906827"></iframe>
         <script src="https://crm.clarityadvisor.au/js/form_embed.js" type="text/javascript"></script>
       </div>
+      <script>
+        (function () {
+          var p = new URLSearchParams(window.location.search);
+          var name  = p.get('name')  || '';
+          var email = p.get('email') || '';
+          var phone = p.get('phone') || '';
+          if (!email && !name) return;
+
+          var nameParts = name.trim().split(/\s+/);
+          var firstName = nameParts[0] || '';
+          var lastName  = nameParts.slice(1).join(' ') || '';
+
+          var iframe = document.getElementById('O4sOXXeLuFvCYic2BkXA_1781946906827');
+          var base   = 'https://crm.clarityadvisor.au/widget/booking/O4sOXXeLuFvCYic2BkXA';
+          var params = new URLSearchParams({
+            first_name: firstName,
+            last_name:  lastName,
+            email:      email,
+            phone:      phone,
+          });
+          iframe.src = base + '?' + params.toString();
+        })();
+      </script>
 
     </div>
   </main>
