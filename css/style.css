@@ -1744,21 +1744,6 @@ p  { color: var(--col-muted); font-size: 1.05rem; line-height: 1.75; }
 }
 
 /* ============================================================
-   CREDENTIALS — centered on desktop, marquee on mobile
-   ============================================================ */
-@media (min-width: 681px) {
-  .credentials-marquee {
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
-  .credentials-track {
-    width: 100%;
-    justify-content: center;
-    animation: none;
-  }
-}
-
-/* ============================================================
    RESPONSIVE — TABLET
    ============================================================ */
 @media (max-width: 900px) {
