@@ -1459,6 +1459,7 @@ p  { color: var(--col-muted); font-size: 1.05rem; line-height: 1.75; }
   .compare-grid      { grid-template-columns: 1fr; }
   .who-grid          { grid-template-columns: 1fr; }
   .recap-icons       { grid-template-columns: repeat(2, 1fr); gap: 28px; }
+  .greviews-badge    { display: flex; width: fit-content; margin-inline: auto; }
 
   .header-right .btn { display: none; }
 }
