@@ -71,18 +71,11 @@
     const nameParts = fullName.split(/\s+/);
     const email     = fields.email.el.value.trim();
     const phone     = fields.phone.el.value.trim();
-    const bizType   = document.getElementById('f-type').value || '';
-    const revenue   = document.getElementById('f-revenue').value || '';
-    const challenge = document.getElementById('f-challenge').value || '';
-
     const payload = JSON.stringify({
       first_name:    nameParts[0] || fullName,
       last_name:     nameParts.slice(1).join(' ') || '',
       email:         email,
       phone:         phone,
-      business_type: bizType,
-      revenue_range: revenue,
-      challenge:     challenge,
       source:        'Landing Page — Free Review Form',
       funnel_stage:  'Lead',
     });
