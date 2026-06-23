@@ -80,19 +80,22 @@
       funnel_stage:  'Lead',
     });
 
-    // GHL supports CORS (access-control-allow-origin: *) so send as proper JSON
-    fetch(GHL_WEBHOOK, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: payload,
-    }).catch(() => {});
-
     // Meta Pixel — fire Lead conversion before redirect
     if (typeof fbq === 'function') {
       fbq('track', 'Lead', { content_name: 'Free Tax Review' });
     }
 
-    window.location.href = 'booking.html?name=' + encodeURIComponent(fullName) + '&email=' + encodeURIComponent(email) + '&phone=' + encodeURIComponent(phone);
+    const redirectUrl = 'booking.html?name=' + encodeURIComponent(fullName) + '&email=' + encodeURIComponent(email) + '&phone=' + encodeURIComponent(phone);
+
+    // keepalive ensures the request survives page navigation (fixes Instagram IAB cancellation)
+    fetch(GHL_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: payload,
+      keepalive: true,
+    }).finally(() => {
+      window.location.href = redirectUrl;
+    });
   });
 })();
 
