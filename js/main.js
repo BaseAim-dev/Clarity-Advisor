@@ -80,20 +80,40 @@
       funnel_stage:  'Lead',
     });
 
-    // Meta Pixel — fire Lead conversion before redirect
+    // Unique event ID so browser pixel + CAPI are deduplicated by Meta
+    const eventId = 'lead_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
+
+    // Meta Pixel — browser-side Lead event
     if (typeof fbq === 'function') {
-      fbq('track', 'Lead', { content_name: 'Free Tax Review' });
+      fbq('track', 'Lead', { content_name: 'Free Tax Review' }, { eventID: eventId });
     }
 
     const redirectUrl = 'booking.html?name=' + encodeURIComponent(fullName) + '&email=' + encodeURIComponent(email) + '&phone=' + encodeURIComponent(phone);
 
-    // keepalive ensures the request survives page navigation (fixes Instagram IAB cancellation)
-    fetch(GHL_WEBHOOK, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: payload,
-      keepalive: true,
-    }).finally(() => {
+    // Fire GHL webhook + CAPI in parallel; redirect once both settle
+    Promise.allSettled([
+      fetch(GHL_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: payload,
+        keepalive: true,
+      }),
+      fetch('/api/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          event_name:        'Lead',
+          event_id:          eventId,
+          email:             email,
+          phone:             phone,
+          first_name:        nameParts[0] || fullName,
+          last_name:         nameParts.slice(1).join(' ') || '',
+          event_source_url:  window.location.href,
+          client_user_agent: navigator.userAgent,
+        }),
+        keepalive: true,
+      }),
+    ]).finally(() => {
       window.location.href = redirectUrl;
     });
   });
