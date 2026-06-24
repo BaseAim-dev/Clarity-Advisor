@@ -56,6 +56,10 @@ module.exports = async function handler(req, res) {
     }],
   };
 
+  if (process.env.META_TEST_CODE) {
+    payload.test_event_code = process.env.META_TEST_CODE;
+  }
+
   try {
     const r = await fetch(
       `https://graph.facebook.com/v19.0/${PIXEL_ID}/events?access_token=${process.env.META_CAPI_TOKEN}`,
