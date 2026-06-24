@@ -83,6 +83,17 @@
     // Unique event ID so browser pixel + CAPI are deduplicated by Meta
     const eventId = 'lead_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
 
+    // Read Facebook browser ID and click ID from cookies
+    function getCookie(name) {
+      var m = document.cookie.match('(^|;)\\s*' + name + '=([^;]+)');
+      return m ? m[2] : '';
+    }
+    const fbp = getCookie('_fbp');
+    const fbc = getCookie('_fbc') || (function () {
+      var fbclid = new URLSearchParams(window.location.search).get('fbclid');
+      return fbclid ? 'fb.1.' + Date.now() + '.' + fbclid : '';
+    })();
+
     // Meta Pixel — browser-side Lead event
     if (typeof fbq === 'function') {
       fbq('track', 'Lead', { content_name: 'Free Tax Review' }, { eventID: eventId });
@@ -110,6 +121,8 @@
           last_name:         nameParts.slice(1).join(' ') || '',
           event_source_url:  window.location.href,
           client_user_agent: navigator.userAgent,
+          fbp:               fbp,
+          fbc:               fbc,
         }),
         keepalive: true,
       }),

@@ -29,6 +29,8 @@ module.exports = async function handler(req, res) {
     last_name,
     event_source_url,
     client_user_agent,
+    fbp,
+    fbc,
   } = req.body || {};
 
   const userData = {};
@@ -37,6 +39,8 @@ module.exports = async function handler(req, res) {
   if (first_name)             userData.fn = [sha256(first_name.trim().toLowerCase())];
   if (last_name?.trim())      userData.ln = [sha256(last_name.trim().toLowerCase())];
   if (client_user_agent)      userData.client_user_agent = client_user_agent;
+  if (fbp)                    userData.fbp = fbp;
+  if (fbc)                    userData.fbc = fbc;
 
   const ip = ((req.headers['x-forwarded-for'] || '').split(',')[0] || '').trim();
   if (ip) userData.client_ip_address = ip;
