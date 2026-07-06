@@ -362,9 +362,9 @@ p  { color: var(--col-muted); font-size: 1.05rem; line-height: 1.75; }
    CREDENTIALS STRIP — auto-scrolling carousel
    ============================================================ */
 .credentials-strip {
-  background: var(--col-bg-card);
-  border-top: 1px solid var(--col-border);
-  border-bottom: 1px solid var(--col-border);
+  background: #ffffff;
+  border-top: 1px solid #e8e8ed;
+  border-bottom: 1px solid #e8e8ed;
   padding-block: 20px;
   overflow: hidden;
 }
@@ -375,7 +375,7 @@ p  { color: var(--col-muted); font-size: 1.05rem; line-height: 1.75; }
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--col-muted);
+  color: #888;
   margin-bottom: 16px;
 }
 
@@ -392,7 +392,7 @@ p  { color: var(--col-muted); font-size: 1.05rem; line-height: 1.75; }
   align-items: center;
   gap: 52px;
   width: max-content;
-  animation: cred-scroll 24s linear infinite;
+  animation: cred-scroll 10s linear infinite;
   will-change: transform;
 }
 
@@ -410,7 +410,7 @@ p  { color: var(--col-muted); font-size: 1.05rem; line-height: 1.75; }
   height: 46px;
   width: auto;
   flex-shrink: 0;
-  opacity: 0.85;
+  opacity: 0.75;
   transition: opacity 0.2s;
 }
 .cred-logo:hover { opacity: 1; }
