@@ -21,15 +21,18 @@
     // CAPI — server-side Schedule event (deduplicated via eventID)
     (function (eid) {
       var p = new URLSearchParams(window.location.search);
-      var email    = p.get('email') || '';
-      var nameFull = p.get('name')  || '';
+      // Fall back to sessionStorage set during the lead form submission
+      // in case GHL doesn't forward params in the redirect URL
+      var email    = p.get('email') || (function(){ try { return sessionStorage.getItem('_ca_email') || ''; } catch(e){ return ''; } })();
+      var nameFull = p.get('name')  || (function(){ try { return sessionStorage.getItem('_ca_name')  || ''; } catch(e){ return ''; } })();
+      var phone    = p.get('phone') || (function(){ try { return sessionStorage.getItem('_ca_phone') || ''; } catch(e){ return ''; } })();
       var parts    = nameFull.trim().split(/\s+/);
       function getCookie(name) {
         var m = document.cookie.match('(^|;)\\s*' + name + '=([^;]+)');
         return m ? m[2] : '';
       }
       var fbp = getCookie('_fbp');
-      var fbc = getCookie('_fbc');
+      var fbc = getCookie('_fbc') || (function(){ try { return sessionStorage.getItem('_fbc') || ''; } catch(e){ return ''; } })();
       fetch('/api/track', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -37,6 +40,7 @@
           event_name:        'Schedule',
           event_id:          eid,
           email:             email,
+          phone:             phone,
           first_name:        parts[0] || nameFull,
           last_name:         parts.slice(1).join(' ') || '',
           event_source_url:  window.location.href,

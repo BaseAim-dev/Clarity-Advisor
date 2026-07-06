@@ -115,6 +115,14 @@
       fbq('track', 'Lead', { content_name: 'Free Tax Review' }, { eventID: eventId });
     }
 
+    // Persist user data so the thank-you page CAPI call can include it
+    // even when GHL doesn't forward params in the redirect URL
+    try {
+      sessionStorage.setItem('_ca_name',  fullName);
+      sessionStorage.setItem('_ca_email', email);
+      sessionStorage.setItem('_ca_phone', phone);
+    } catch (e) {}
+
     const redirectUrl = 'booking.html?name=' + encodeURIComponent(fullName) + '&email=' + encodeURIComponent(email) + '&phone=' + encodeURIComponent(phone);
 
     // Fire GHL webhook + CAPI in parallel; redirect once both settle

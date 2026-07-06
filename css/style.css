@@ -350,8 +350,7 @@ p  { color: var(--col-muted); font-size: 1.05rem; line-height: 1.75; }
 .hero-stat-label {
   font-size: 0.76rem;
   color: rgba(255,255,255,0.45);
-}
-.hero-stat-divider {
+}.hero-stat-divider {
   width: 1px;
   height: 32px;
   background: rgba(255,255,255,0.12);
@@ -366,18 +365,18 @@ p  { color: var(--col-muted); font-size: 1.05rem; line-height: 1.75; }
   background: var(--col-bg-card);
   border-top: 1px solid var(--col-border);
   border-bottom: 1px solid var(--col-border);
-  padding-block: 12px;
+  padding-block: 20px;
   overflow: hidden;
 }
 
 .credentials-label {
   text-align: center;
-  font-size: 9px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--col-muted);
-  margin-bottom: 10px;
+  margin-bottom: 16px;
 }
 
 /* Marquee wrapper — fade edges */
@@ -408,7 +407,7 @@ p  { color: var(--col-muted); font-size: 1.05rem; line-height: 1.75; }
 
 /* Logo images */
 .cred-logo {
-  height: 26px;
+  height: 46px;
   width: auto;
   flex-shrink: 0;
   opacity: 0.85;
@@ -417,7 +416,7 @@ p  { color: var(--col-muted); font-size: 1.05rem; line-height: 1.75; }
 .cred-logo:hover { opacity: 1; }
 
 /* Circular badge (TPB) — slightly taller */
-.cred-logo--badge { height: 34px; }
+.cred-logo--badge { height: 56px; }
 
 /* ============================================================
    SECTION 2 — SOCIAL PROOF (3 cards) — kept for other sections
@@ -739,6 +738,7 @@ p  { color: var(--col-muted); font-size: 1.05rem; line-height: 1.75; }
   background: rgba(0, 210, 148, 0.12);
   color: var(--col-green);
 }
+
 
 /* ============================================================
    SECTION — WHO IT'S FOR
