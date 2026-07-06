@@ -264,6 +264,21 @@ if (proofSection) {
 }
 
 /* ============================================================
+   INSIDE THE CALL — scroll-triggered entrance
+   ============================================================ */
+const itcSection = document.querySelector('.itc-section');
+if (itcSection) {
+  new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        itcSection.classList.add('is-visible');
+      }
+    },
+    { threshold: 0.06 }
+  ).observe(itcSection);
+}
+
+/* ============================================================
    WHEN TIMING MATTERS — scroll-triggered card entrance
    ============================================================ */
 const whoSection = document.querySelector('.who-section');
