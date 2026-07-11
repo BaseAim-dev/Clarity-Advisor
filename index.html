@@ -416,7 +416,7 @@
       </a>
 
       <div class="header-right">
-        <a href="#" data-open-modal class="btn btn-outline">Free Tax Review</a>
+        <a href="#book-review" data-open-modal class="btn btn-outline">Free Tax Review</a>
       </div>
 
     </div>
@@ -440,7 +440,7 @@
           <p>
             The clients who win are the ones whose accountant moves at the same speed as their opportunity — book a call to see what you can save.
           </p>
-          <a href="#" data-open-modal class="btn btn-coral">Claim My Free Review Now <span class="btn-arr">→</span></a>
+          <a href="#book-review" data-open-modal class="btn btn-coral">Claim My Free Review Now <span class="btn-arr">→</span></a>
 
           <!-- Google social proof badge — below CTA -->
           <div class="greviews-badge">
@@ -587,7 +587,7 @@
 
       </div>
       <div class="cta-block">
-        <a href="#" data-open-modal class="btn btn-coral">Claim My Free Review Now <span class="btn-arr">→</span></a>
+        <a href="#book-review" data-open-modal class="btn btn-coral">Claim My Free Review Now <span class="btn-arr">→</span></a>
       </div>
     </div>
   </section>
@@ -751,7 +751,7 @@
       </div><!-- /.itc-grid -->
 
       <div class="cta-block" style="text-align:center; margin-top:52px;">
-        <a href="#" data-open-modal class="btn btn-coral">Book My Free Review <span class="btn-arr">→</span></a>
+        <a href="#book-review" data-open-modal class="btn btn-coral">Book My Free Review <span class="btn-arr">→</span></a>
       </div>
 
     </div>
@@ -804,7 +804,7 @@
       </div>
 
       <div class="cta-block">
-        <a href="#" data-open-modal class="btn btn-coral">Claim My Free Review Now <span class="btn-arr">→</span></a>
+        <a href="#book-review" data-open-modal class="btn btn-coral">Claim My Free Review Now <span class="btn-arr">→</span></a>
       </div>
 
     </div>
@@ -935,7 +935,7 @@
         </div>
 
         <div class="cta-block">
-          <a href="#" data-open-modal class="btn btn-coral">Claim My Free Review Now <span class="btn-arr">→</span></a>
+          <a href="#book-review" data-open-modal class="btn btn-coral">Claim My Free Review Now <span class="btn-arr">→</span></a>
         </div>
 
       </div>
@@ -966,44 +966,49 @@
   </footer>
 
 
-  <!-- CTA MODAL FORM -->
-  <div class="cta-modal" id="cta-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <div class="cta-modal-backdrop"></div>
-    <div class="cta-modal-card">
-      <div class="cta-modal-header">
-        <span class="label">Free Tax Review</span>
-        <h3 id="modal-title">Claim Your Complimentary<br><span class="text-gold">30-Minute Strategy Call</span></h3>
-      </div>
-      <form class="cta-form" id="cta-form" novalidate>
-        <div class="cta-form-row">
-          <div class="cta-form-field">
-            <label for="f-name">Full Name <span aria-hidden="true">*</span></label>
-            <input type="text" id="f-name" name="name" placeholder="Jane Smith" required autocomplete="name" />
-            <span class="field-error" id="err-name"></span>
+  <!-- INLINE FORM SECTION -->
+  <section id="book-review" class="inline-form-section section-pad">
+    <div class="container">
+      <div class="inline-form-wrap">
+
+        <div class="inline-form-header">
+          <span class="label">Free Tax Review</span>
+          <h2>Claim Your Complimentary <span class="text-gold">30-Minute Strategy Call</span></h2>
+          <p class="inline-form-sub">Spots are limited. Usually replied to within 48 hours.</p>
+        </div>
+
+        <form class="cta-form inline-form" id="cta-form" novalidate>
+          <div class="cta-form-row">
+            <div class="cta-form-field">
+              <label for="f-name">Full Name <span aria-hidden="true">*</span></label>
+              <input type="text" id="f-name" name="name" placeholder="Jane Smith" required autocomplete="name" />
+              <span class="field-error" id="err-name"></span>
+            </div>
+            <div class="cta-form-field">
+              <label for="f-phone">Phone Number <span aria-hidden="true">*</span></label>
+              <input type="tel" id="f-phone" name="phone" placeholder="04xx xxx xxx" required autocomplete="tel" />
+              <span class="field-error" id="err-phone"></span>
+            </div>
           </div>
           <div class="cta-form-field">
-            <label for="f-phone">Phone Number <span aria-hidden="true">*</span></label>
-            <input type="tel" id="f-phone" name="phone" placeholder="04xx xxx xxx" required autocomplete="tel" />
-            <span class="field-error" id="err-phone"></span>
+            <label for="f-email">Business Email <span aria-hidden="true">*</span></label>
+            <input type="email" id="f-email" name="email" placeholder="jane@yourbusiness.com.au" required autocomplete="email" />
+            <span class="field-error" id="err-email"></span>
           </div>
+          <button type="submit" class="btn btn-coral cta-form-submit">Book My Free Review <span class="btn-arr">→</span></button>
+        </form>
+
+        <div class="cta-form-success" id="cta-form-success" hidden>
+          <div class="success-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h4>You're booked in!</h4>
+          <p>We'll be in touch within 48 hours to confirm your session time.</p>
         </div>
-        <div class="cta-form-field">
-          <label for="f-email">Business Email <span aria-hidden="true">*</span></label>
-          <input type="email" id="f-email" name="email" placeholder="jane@yourbusiness.com.au" required autocomplete="email" />
-          <span class="field-error" id="err-email"></span>
-        </div>
-        <button type="submit" class="btn btn-coral cta-form-submit">Book My Free Review <span class="btn-arr">→</span></button>
-        <p class="cta-form-note">Spots are limited. Usually replied to within 48 hours.</p>
-      </form>
-      <div class="cta-form-success" id="cta-form-success" hidden>
-        <div class="success-icon">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-        </div>
-        <h4>You're booked in!</h4>
-        <p>We'll be in touch within 48 hours to confirm your session time.</p>
+
       </div>
     </div>
-  </div>
+  </section>
 
   <!-- JavaScript -->
   <script src="js/main.js" defer></script>

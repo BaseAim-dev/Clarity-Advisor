@@ -13,23 +13,24 @@
 })();
 
 /* ============================================================
-   CTA MODAL FORM
+   INLINE FORM — scroll CTA buttons to the form
    ============================================================ */
 (function () {
-  const modal = document.getElementById('cta-modal');
-  const form  = document.getElementById('cta-form');
-
-  function openModal() {
-    modal.classList.add('is-open');
-    document.body.style.overflow = 'hidden';
-    modal.querySelector('input, select, textarea').focus();
-  }
+  const form = document.getElementById('cta-form');
 
   document.querySelectorAll('[data-open-modal]').forEach(btn => {
-    btn.addEventListener('click', e => { e.preventDefault(); openModal(); });
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.getElementById('book-review');
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => {
+          const first = target.querySelector('input, select, textarea');
+          if (first) first.focus();
+        }, 600);
+      }
+    });
   });
-
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') e.preventDefault(); });
 
   const fields = {
     name:  { el: document.getElementById('f-name'),  err: document.getElementById('err-name') },

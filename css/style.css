@@ -1440,75 +1440,42 @@ p  { color: var(--col-muted); font-size: 1.05rem; line-height: 1.75; }
 }
 
 /* ============================================================
-   CTA MODAL FORM
+   INLINE FORM SECTION
    ============================================================ */
-.cta-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity 0.28s ease, visibility 0.28s ease;
-}
-
-.cta-modal.is-open {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: all;
-}
-
-.cta-modal-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.75);
-  backdrop-filter: blur(4px);
-}
-
-.cta-modal-card {
-  position: relative;
+.inline-form-section {
   background: var(--col-bg-card);
-  border: 1px solid rgba(216,178,96,0.2);
-  border-radius: 24px;
-  padding: 40px;
-  width: 100%;
-  max-width: 560px;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(216,178,96,0.08);
-  transform: translateY(20px) scale(0.97);
-  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  border-top: 1px solid var(--col-border);
 }
 
-.cta-modal.is-open .cta-modal-card {
-  transform: translateY(0) scale(1);
+.inline-form-wrap {
+  max-width: 640px;
+  margin-inline: auto;
 }
 
-.cta-modal-header {
-  margin-bottom: 28px;
+.inline-form-header {
+  text-align: center;
+  margin-bottom: 40px;
 }
 
-.cta-modal-header .label {
-  display: block;
-  margin-bottom: 10px;
-}
-
-.cta-modal-header h3 {
-  font-size: clamp(1.4rem, 3vw, 1.9rem);
+.inline-form-header h2 {
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
   font-weight: 800;
-  color: #fff;
-  margin: 0 0 10px;
   line-height: 1.2;
+  margin: 10px 0 0;
 }
 
-.cta-modal-header p {
-  font-size: 0.9rem;
-  color: rgba(255,255,255,0.5);
-  margin: 0;
+.inline-form-sub {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.4);
+  margin-top: 10px;
+}
+
+.inline-form {
+  background: var(--col-bg);
+  border: 1px solid rgba(216,178,96,0.18);
+  border-radius: 20px;
+  padding: 36px;
+  box-shadow: 0 0 0 1px rgba(216,178,96,0.06), 0 24px 64px rgba(0,0,0,0.3);
 }
 
 .cta-form {
