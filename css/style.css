@@ -976,6 +976,7 @@ p  { color: var(--col-muted); font-size: 1.05rem; line-height: 1.75; }
 }
 
 @media (max-width: 860px) {
+  .itc-header h2 { font-size: 2rem; }
   .itc-grid { grid-template-columns: 1fr; }
   .itc-col  { transform: translateY(24px); padding: 28px 20px; }
   .itc-col--gold { transform: translateY(24px); order: -1; }
