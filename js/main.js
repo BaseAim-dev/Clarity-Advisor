@@ -124,9 +124,7 @@
       sessionStorage.setItem('_ca_phone', phone);
     } catch (e) {}
 
-    const redirectUrl = 'booking.html?name=' + encodeURIComponent(fullName) + '&email=' + encodeURIComponent(email) + '&phone=' + encodeURIComponent(phone);
-
-    // Fire GHL webhook + CAPI in parallel; redirect once both settle
+    // Fire GHL webhook + CAPI in parallel; then reveal booking widget
     Promise.allSettled([
       fetch(GHL_WEBHOOK, {
         method: 'POST',
@@ -152,7 +150,29 @@
         keepalive: true,
       }),
     ]).finally(() => {
-      window.location.href = redirectUrl;
+      // Hide form, show success message + booking widget
+      form.hidden = true;
+      const successEl = document.getElementById('cta-form-success');
+      const widgetEl  = document.getElementById('inline-booking-widget');
+      const iframe    = document.getElementById('booking-iframe');
+
+      if (successEl) successEl.hidden = false;
+
+      if (iframe && widgetEl) {
+        const params = new URLSearchParams({
+          first_name:   nameParts[0] || fullName,
+          last_name:    nameParts.slice(1).join(' ') || '',
+          email:        email,
+          phone:        phone,
+          phone_number: phone,
+          phoneNumber:  phone,
+        });
+        iframe.src = 'https://crm.clarityadvisor.au/widget/booking/O4sOXXeLuFvCYic2BkXA?' + params.toString();
+        widgetEl.hidden = false;
+      }
+
+      // Scroll to success message
+      if (successEl) successEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
 })();
