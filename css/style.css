@@ -978,7 +978,9 @@ p  { color: var(--col-muted); font-size: 1.05rem; line-height: 1.75; }
 @media (max-width: 860px) {
   .itc-grid { grid-template-columns: 1fr; }
   .itc-col  { transform: translateY(24px); padding: 28px 20px; }
-  .itc-col--gold { transform: translateY(24px); }
+  .itc-col--gold { transform: translateY(24px); order: -1; }
+  .itc-divider   { order: 0; }
+  .itc-col:not(.itc-col--gold) { order: 1; }
   .itc-section.is-visible .itc-col,
   .itc-section.is-visible .itc-col--gold { transform: translateY(0); }
   .itc-col:hover, .itc-col--gold:hover   { transform: translateY(-4px); }
