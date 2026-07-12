@@ -1443,8 +1443,20 @@ p  { color: var(--col-muted); font-size: 1.05rem; line-height: 1.75; }
    INLINE FORM SECTION
    ============================================================ */
 .inline-form-section {
-  background: var(--col-bg-card);
-  border-top: 1px solid var(--col-border);
+  background: #ffffff;
+  border-top: none;
+}
+
+.inline-form-section .label {
+  color: var(--col-gold);
+}
+
+.inline-form-section h2 {
+  color: #0d0f15;
+}
+
+.inline-form-sub {
+  color: rgba(0,0,0,0.5) !important;
 }
 
 .inline-form-wrap {
@@ -1601,8 +1613,8 @@ p  { color: var(--col-muted); font-size: 1.05rem; line-height: 1.75; }
 
 .inline-booking-widget {
   margin-top: 32px;
-  background: var(--col-bg);
-  border: 1px solid rgba(216,178,96,0.18);
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.08);
   border-radius: 20px;
   overflow: hidden;
   max-width: 640px;
