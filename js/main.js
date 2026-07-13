@@ -155,6 +155,13 @@ let _teamSize     = '';
     const email     = fields.email.el.value.trim();
     const phone     = fields.phone.el.value.trim();
 
+    // Persist for Schedule CAPI on thank-you page (phone is not in GHL redirect URL)
+    try {
+      sessionStorage.setItem('_ca_email', email);
+      sessionStorage.setItem('_ca_name',  fullName);
+      sessionStorage.setItem('_ca_phone', phone);
+    } catch (_) {}
+
     // Unique event ID so browser pixel + CAPI are deduplicated by Meta
     const eventId = 'lead_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
 
