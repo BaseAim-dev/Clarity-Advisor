@@ -238,19 +238,197 @@ let _teamSize     = '';
 })();
 
 /* ============================================================
-   MODAL BOOKING IFRAME — auto-resize via GHL postMessage
+   BOOKING IFRAMES — auto-resize via GHL postMessage
    ============================================================ */
 window.addEventListener('message', function (e) {
-  var iframe = document.getElementById('qm-booking-iframe');
-  if (!iframe || !iframe.src) return;
-  try {
-    var data = (typeof e.data === 'string') ? JSON.parse(e.data) : e.data;
-    var h = data && (data.height || data.value || (data.data && data.data.height));
-    if (h && parseInt(h) > 100) {
-      iframe.style.height = (parseInt(h) + 60) + 'px';
-    }
-  } catch (_) {}
+  ['qm-booking-iframe', 'if-booking-iframe'].forEach(function (id) {
+    var iframe = document.getElementById(id);
+    if (!iframe || !iframe.src) return;
+    if (e.source !== iframe.contentWindow) return;
+    try {
+      var data = (typeof e.data === 'string') ? JSON.parse(e.data) : e.data;
+      var h = data && (data.height || data.value || (data.data && data.data.height));
+      if (h && parseInt(h) > 100) {
+        iframe.style.height = (parseInt(h) + 60) + 'px';
+      }
+    } catch (_) {}
+  });
 });
+
+/* ============================================================
+   INLINE QUALIFICATION FUNNEL
+   ============================================================ */
+(function () {
+  const funnel = document.getElementById('if-funnel');
+  if (!funnel) return;
+
+  let _iBusinessName = '';
+  let _iTeamSize     = '';
+
+  const ifSteps = funnel.querySelectorAll('.if-step');
+
+  function showIfStep(n) {
+    ifSteps.forEach((s, i) => s.classList.toggle('is-active', i === n - 1));
+  }
+
+  // Step 1 → 2
+  funnel.querySelector('.if-next-btn').addEventListener('click', () => {
+    const input = document.getElementById('if-business');
+    const err   = document.getElementById('if-err-business');
+    if (!input.value.trim()) { err.textContent = 'Please enter your business name.'; input.focus(); return; }
+    err.textContent = '';
+    _iBusinessName = input.value.trim();
+    showIfStep(2);
+  });
+  document.getElementById('if-business').addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); funnel.querySelector('.if-next-btn').click(); }
+  });
+
+  // Step 2 options → auto-advance
+  funnel.querySelectorAll('.if-opt').forEach(btn => {
+    btn.addEventListener('click', () => {
+      funnel.querySelectorAll('.if-opt').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      _iTeamSize = btn.dataset.value;
+      setTimeout(() => showIfStep(3), 300);
+    });
+  });
+
+  // Back buttons
+  funnel.querySelectorAll('.if-back-btn').forEach(btn => {
+    btn.addEventListener('click', () => showIfStep(parseInt(btn.dataset.prev)));
+  });
+
+  // Form validation + submit
+  const ifForm = document.getElementById('if-form');
+  const ifFields = {
+    name:  { el: document.getElementById('if-name'),  err: document.getElementById('if-err-name') },
+    email: { el: document.getElementById('if-email'), err: document.getElementById('if-err-email') },
+    phone: { el: document.getElementById('if-phone'), err: document.getElementById('if-err-phone') },
+  };
+  const ifPhoneRe = /^(\+?61|0)[2-9]\d{8}$|^(\+?61|0)4\d{8}$/;
+
+  function ifValidate(id) {
+    const { el, err } = ifFields[id];
+    const val = el.value.trim();
+    let msg = '';
+    if (id === 'name') {
+      if (!val) msg = 'Please enter your full name.';
+      else if (val.length < 2) msg = 'Name must be at least 2 characters.';
+    } else if (id === 'email') {
+      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!val) msg = 'Please enter your email address.';
+      else if (!emailRe.test(val)) msg = 'Please enter a valid email address.';
+    } else if (id === 'phone') {
+      const digits = val.replace(/[\s\-().]/g, '');
+      if (!digits) msg = 'Please enter your phone number.';
+      else if (!ifPhoneRe.test(digits)) msg = 'Please enter a valid Australian number (e.g. 0412 345 678).';
+    }
+    err.textContent = msg;
+    el.classList.toggle('invalid', !!msg);
+    el.classList.toggle('valid', !msg && val.length > 0);
+    return !msg;
+  }
+
+  Object.keys(ifFields).forEach(id => {
+    ifFields[id].el.addEventListener('blur', () => ifValidate(id));
+    ifFields[id].el.addEventListener('input', () => {
+      if (ifFields[id].el.classList.contains('invalid')) ifValidate(id);
+    });
+  });
+
+  const IF_GHL_WEBHOOK = 'https://services.leadconnectorhq.com/hooks/OgNkyxOT5jOvbkaU5DdM/webhook-trigger/84a02646-f320-432a-a28a-ac9c4e099212';
+
+  ifForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const valid = Object.keys(ifFields).map(id => ifValidate(id)).every(Boolean);
+    if (!valid) return;
+
+    const submitBtn = ifForm.querySelector('.if-submit-btn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+
+    const fullName  = ifFields.name.el.value.trim();
+    const nameParts = fullName.split(/\s+/);
+    const email     = ifFields.email.el.value.trim();
+    const phone     = ifFields.phone.el.value.trim();
+
+    const eventId = 'lead_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
+
+    function getCookie(name) {
+      var m = document.cookie.match('(^|;)\\s*' + name + '=([^;]+)');
+      return m ? m[2] : '';
+    }
+    const fbp = getCookie('_fbp');
+    const fbc = getCookie('_fbc') || sessionStorage.getItem('_fbc') || '';
+
+    try {
+      sessionStorage.setItem('_ca_email', email);
+      sessionStorage.setItem('_ca_name',  fullName);
+      sessionStorage.setItem('_ca_phone', phone);
+    } catch (_) {}
+
+    if (typeof fbq === 'function') {
+      fbq('track', 'Lead', { content_name: 'Free Tax Review' }, { eventID: eventId });
+    }
+
+    Promise.allSettled([
+      fetch(IF_GHL_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          first_name:    nameParts[0] || fullName,
+          last_name:     nameParts.slice(1).join(' ') || '',
+          email:         email,
+          phone:         phone,
+          business_name: _iBusinessName,
+          team_size:     _iTeamSize,
+          source:        'Landing Page — Inline Form',
+          funnel_stage:  'Lead',
+        }),
+        keepalive: true,
+      }),
+      fetch('/api/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          event_name:        'Lead',
+          event_id:          eventId,
+          email:             email,
+          phone:             phone,
+          first_name:        nameParts[0] || fullName,
+          last_name:         nameParts.slice(1).join(' ') || '',
+          event_source_url:  window.location.href,
+          client_user_agent: navigator.userAgent,
+          fbp:               fbp,
+          fbc:               fbc,
+        }),
+        keepalive: true,
+      }),
+    ]).finally(() => {
+      const params = new URLSearchParams({
+        first_name:   nameParts[0] || fullName,
+        last_name:    nameParts.slice(1).join(' ') || '',
+        email:        email,
+        phone:        phone,
+        phone_number: phone,
+        phoneNumber:  phone,
+      });
+      const bookWrap   = document.getElementById('if-booking-wrap');
+      const bookIframe = document.getElementById('if-booking-iframe');
+      if (bookIframe) {
+        bookIframe.src = 'https://crm.clarityadvisor.au/widget/booking/O4sOXXeLuFvCYic2BkXA?' + params.toString();
+      }
+      funnel.hidden = true;
+      if (bookWrap) {
+        bookWrap.hidden = false;
+        requestAnimationFrame(() => {
+          bookWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      }
+    });
+  });
+})();
 
 /* ============================================================
    FAQ ACCORDION

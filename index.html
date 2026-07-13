@@ -400,8 +400,8 @@
   </style>
 
   <!-- Full stylesheet — deferred -->
-  <link rel="stylesheet" href="css/style.css?v=9" media="print" onload="this.media='all'" />
-  <noscript><link rel="stylesheet" href="css/style.css?v=9" /></noscript>
+  <link rel="stylesheet" href="css/style.css?v=10" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="css/style.css?v=10" /></noscript>
 </head>
 <body>
 
@@ -531,13 +531,94 @@
         <div class="inline-form-header">
           <span class="label">Free Strategy Session</span>
           <h2>Claim Your Complimentary <span class="text-gold">30-Minute Strategy Call</span></h2>
-          <p class="inline-form-sub">Pick a time that works for you — spots are limited.</p>
+          <p class="inline-form-sub">Answer a couple of quick questions and we'll get you booked in.</p>
         </div>
 
-        <div class="inline-booking-widget">
-          <iframe id="O4sOXXeLuFvCYic2BkXA_1783831768620"
-                  src="https://crm.clarityadvisor.au/widget/booking/O4sOXXeLuFvCYic2BkXA"
-                  style="width:100%;border:none;overflow:hidden;min-height:750px;"
+        <!-- Inline qualification funnel -->
+        <div class="if-funnel" id="if-funnel">
+
+          <!-- Step 1: Business Name -->
+          <div class="if-step is-active" id="if-step-1">
+            <p class="if-step-label">Step 1 of 3</p>
+            <h3 class="if-heading">What's your business name?</h3>
+            <div class="if-field">
+              <input type="text" id="if-business" class="if-input" placeholder="e.g. Smith Consulting" autocomplete="organization" />
+              <span class="if-err" id="if-err-business"></span>
+            </div>
+            <button class="if-btn-primary if-next-btn">Continue →</button>
+          </div>
+
+          <!-- Step 2: Team Size -->
+          <div class="if-step" id="if-step-2">
+            <p class="if-step-label">Step 2 of 3</p>
+            <h3 class="if-heading">Roughly how many team members do you have?</h3>
+            <div class="if-opts">
+              <button class="if-opt" data-value="Just me">
+                <span class="if-opt-ico">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <span class="if-opt-txt">Just me</span>
+                <span class="if-opt-arr">→</span>
+              </button>
+              <button class="if-opt" data-value="2–5">
+                <span class="if-opt-ico">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </span>
+                <span class="if-opt-txt">2–5</span>
+                <span class="if-opt-arr">→</span>
+              </button>
+              <button class="if-opt" data-value="6–15">
+                <span class="if-opt-ico">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </span>
+                <span class="if-opt-txt">6–15</span>
+                <span class="if-opt-arr">→</span>
+              </button>
+              <button class="if-opt" data-value="16+">
+                <span class="if-opt-ico">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+                </span>
+                <span class="if-opt-txt">16+</span>
+                <span class="if-opt-arr">→</span>
+              </button>
+            </div>
+            <button class="if-btn-back if-back-btn" data-prev="1">← Back</button>
+          </div>
+
+          <!-- Step 3: Contact Details -->
+          <div class="if-step" id="if-step-3">
+            <p class="if-step-label">Step 3 of 3</p>
+            <h3 class="if-heading">Where should we send your booking details?</h3>
+            <form id="if-form" action="javascript:void(0)" novalidate>
+              <div class="if-field">
+                <label class="if-field-label" for="if-name">Name</label>
+                <input type="text" id="if-name" class="if-input" placeholder="Jane Smith" autocomplete="name" />
+                <span class="if-err" id="if-err-name"></span>
+              </div>
+              <div class="if-field">
+                <label class="if-field-label" for="if-email">Business Email</label>
+                <input type="email" id="if-email" class="if-input" placeholder="you@business.com" autocomplete="email" />
+                <span class="if-err" id="if-err-email"></span>
+              </div>
+              <div class="if-field">
+                <label class="if-field-label" for="if-phone">Phone</label>
+                <input type="tel" id="if-phone" class="if-input" placeholder="0412 345 678" autocomplete="tel" />
+                <span class="if-err" id="if-err-phone"></span>
+              </div>
+              <button type="submit" class="if-btn-primary if-submit-btn">Book My Call →</button>
+              <p class="if-note">No spam. No obligation. 100% free.</p>
+            </form>
+            <button class="if-btn-back if-back-btn" data-prev="2">← Back</button>
+          </div>
+
+        </div>
+
+        <!-- Booking widget — revealed after step 3 submit -->
+        <div class="inline-booking-widget" id="if-booking-wrap" hidden>
+          <p class="if-booking-intro">You're almost there — pick a time that works for you</p>
+          <iframe id="if-booking-iframe"
+                  src=""
+                  style="width:100%;border:none;overflow:hidden;min-height:1150px;"
                   scrolling="no"></iframe>
           <script src="https://crm.clarityadvisor.au/js/form_embed.js" type="text/javascript"></script>
         </div>
@@ -1091,7 +1172,7 @@
 
 
   <!-- JavaScript -->
-  <script src="js/main.js?v=10" defer></script>
+  <script src="js/main.js?v=11" defer></script>
   <!-- Vercel Speed Insights -->
   <script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
