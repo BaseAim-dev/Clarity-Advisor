@@ -819,12 +819,45 @@
         <div class="inline-form-header">
           <span class="label">Free Tax Review</span>
           <h2>Claim Your Complimentary <span class="text-gold">30-Minute Strategy Call</span></h2>
-          <p class="inline-form-sub">Pick a time that works for you — spots are limited.</p>
+          <p class="inline-form-sub">Fill in your details and we'll get you booked in — spots are limited.</p>
         </div>
 
-        <div class="inline-booking-widget">
-          <iframe src="https://crm.clarityadvisor.au/widget/booking/O4sOXXeLuFvCYic2BkXA" style="width:100%;border:none;overflow:hidden;min-height:680px;" scrolling="no" id="O4sOXXeLuFvCYic2BkXA_1781946906827"></iframe>
-          <script src="https://crm.clarityadvisor.au/js/form_embed.js" type="text/javascript"></script>
+        <!-- STEP 1: Contact form -->
+        <form id="cta-form" class="inline-form" action="javascript:void(0)" novalidate>
+          <div class="cta-form-row">
+            <div class="cta-form-field">
+              <label for="f-name">Full Name</label>
+              <input type="text" id="f-name" name="name" placeholder="Jane Smith" autocomplete="name" />
+              <span class="cta-form-err field-error" id="err-name"></span>
+            </div>
+            <div class="cta-form-field">
+              <label for="f-phone">Phone</label>
+              <input type="tel" id="f-phone" name="phone" placeholder="0412 345 678" autocomplete="tel" />
+              <span class="cta-form-err field-error" id="err-phone"></span>
+            </div>
+          </div>
+          <div class="cta-form-field">
+            <label for="f-email">Email</label>
+            <input type="email" id="f-email" name="email" placeholder="you@example.com" autocomplete="email" />
+            <span class="cta-form-err field-error" id="err-email"></span>
+          </div>
+          <button type="submit" class="btn btn-coral cta-form-submit">
+            Get My Free Review <span class="btn-arr">→</span>
+          </button>
+          <p class="cta-form-note">No spam. No obligation. 100% free.</p>
+        </form>
+
+        <!-- STEP 2: Success + booking widget (shown after form submit) -->
+        <div id="cta-form-success" class="cta-form-success" hidden>
+          <div class="success-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h4>You're in — now pick a time.</h4>
+          <p>Choose a slot below to lock in your free 30-minute strategy call.</p>
+        </div>
+
+        <div id="inline-booking-widget" class="inline-booking-widget" hidden>
+          <iframe id="O4sOXXeLuFvCYic2BkXA_1783831768620" src="" style="width:100%;border:none;overflow:hidden;min-height:750px;" scrolling="no"></iframe>
         </div>
 
       </div>
