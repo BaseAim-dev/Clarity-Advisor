@@ -295,8 +295,8 @@ p  { color: var(--col-muted); font-size: 1.05rem; line-height: 1.75; }
 }
 
 .hero-text { text-align: left; }
-.hero-text h1 { margin-block: 0 18px; }
-.hero-text p  { font-size: 1.05rem; margin-bottom: 30px; color: rgba(255,255,255,0.78); }
+.hero-text h1 { font-size: clamp(2.6rem, 6vw, 4.6rem); line-height: 1.1; font-weight: 800; margin-block: 0 22px; }
+.hero-text p  { font-size: 1.12rem; line-height: 1.75; margin-bottom: 34px; color: rgba(255,255,255,0.78); }
 
 /* "You Love Money," — larger display line */
 .hero-big-line {
