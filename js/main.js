@@ -13,21 +13,85 @@
 })();
 
 /* ============================================================
-   CTA BUTTONS — scroll to booking section
+   QUALIFICATION MODAL — open / close / steps
    ============================================================ */
-document.querySelectorAll('[data-open-modal]').forEach(btn => {
-  btn.addEventListener('click', e => {
-    e.preventDefault();
-    const target = document.getElementById('book-review');
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setTimeout(() => {
-        const first = target.querySelector('input, select, textarea');
-        if (first) first.focus();
-      }, 600);
-    }
+let _businessName = '';
+let _teamSize     = '';
+
+(function () {
+  const modal = document.getElementById('qual-modal');
+  if (!modal) return;
+
+  function openModal() {
+    showStep(1);
+    document.getElementById('qm-business').value = '';
+    document.getElementById('qm-err-business').textContent = '';
+    document.querySelectorAll('.qm-opt').forEach(b => b.classList.remove('selected'));
+    const bookIframe = document.getElementById('qm-booking-iframe');
+    if (bookIframe) bookIframe.src = '';
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => document.getElementById('qm-business').focus(), 100);
+  }
+
+  function closeModal() {
+    modal.hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  const steps = document.querySelectorAll('.qm-step');
+  const card  = modal.querySelector('.qm-card');
+  function showStep(n) {
+    steps.forEach((s, i) => s.classList.toggle('is-active', i === n - 1));
+    if (card) card.classList.toggle('qm-card-wide', n === 4);
+  }
+  window._showModalStep = showStep;
+
+  // CTA buttons open modal
+  document.querySelectorAll('[data-open-modal]').forEach(btn => {
+    btn.addEventListener('click', e => { e.preventDefault(); openModal(); });
   });
-});
+
+  // Close button & backdrop click
+  document.getElementById('qm-close').addEventListener('click', closeModal);
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
+
+  // Step 1 → 2
+  document.querySelector('.qm-next').addEventListener('click', () => {
+    const input = document.getElementById('qm-business');
+    const err   = document.getElementById('qm-err-business');
+    if (!input.value.trim()) { err.textContent = 'Please enter your business name.'; input.focus(); return; }
+    err.textContent = '';
+    _businessName = input.value.trim();
+    showStep(2);
+  });
+  document.getElementById('qm-business').addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); document.querySelector('.qm-next').click(); }
+  });
+
+  // Step 2 options → auto-advance to step 3
+  document.querySelectorAll('.qm-opt').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.qm-opt').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      _teamSize = btn.dataset.value;
+      setTimeout(() => showStep(3), 300);
+    });
+  });
+
+  // Back buttons
+  document.querySelectorAll('.qm-btn-back').forEach(btn => {
+    btn.addEventListener('click', () => showStep(parseInt(btn.dataset.prev)));
+  });
+
+  // Expose close for form submit handler
+  window._closeQualModal = closeModal;
+})();
+
+/* ============================================================
+   CTA BUTTONS — (handled by modal above)
+   ============================================================ */
 
 /* ============================================================
    CONTACT FORM — validate, send to GHL, reveal booking widget
@@ -118,12 +182,14 @@ document.querySelectorAll('[data-open-modal]').forEach(btn => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          first_name:   nameParts[0] || fullName,
-          last_name:    nameParts.slice(1).join(' ') || '',
-          email:        email,
-          phone:        phone,
-          source:       'Landing Page — Free Review Form',
-          funnel_stage: 'Lead',
+          first_name:    nameParts[0] || fullName,
+          last_name:     nameParts.slice(1).join(' ') || '',
+          email:         email,
+          phone:         phone,
+          business_name: _businessName,
+          team_size:     _teamSize,
+          source:        'Landing Page — Free Review Form',
+          funnel_stage:  'Lead',
         }),
         keepalive: true,
       }),
@@ -146,38 +212,38 @@ document.querySelectorAll('[data-open-modal]').forEach(btn => {
         keepalive: true,
       }),
     ]).finally(() => {
-      form.hidden = true;
-
-      const successEl = document.getElementById('cta-form-success');
-      const widgetEl  = document.getElementById('inline-booking-widget');
-      const iframe    = document.querySelector('#inline-booking-widget iframe');
-
-      if (successEl) successEl.hidden = false;
-
-      if (iframe && widgetEl) {
-        const params = new URLSearchParams({
-          first_name:   nameParts[0] || fullName,
-          last_name:    nameParts.slice(1).join(' ') || '',
-          email:        email,
-          phone:        phone,
-          phone_number: phone,
-          phoneNumber:  phone,
-        });
-        iframe.src = 'https://crm.clarityadvisor.au/widget/booking/O4sOXXeLuFvCYic2BkXA?' + params.toString();
-        widgetEl.hidden = false;
-
-        // Load form_embed.js now so it initialises against the live iframe
-        const embedScript = document.createElement('script');
-        embedScript.src = 'https://crm.clarityadvisor.au/js/form_embed.js';
-        document.body.appendChild(embedScript);
-      }
-
-      requestAnimationFrame(() => {
-        if (successEl) successEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Load booking widget in step 4 with contact data pre-filled
+      const params = new URLSearchParams({
+        first_name:   nameParts[0] || fullName,
+        last_name:    nameParts.slice(1).join(' ') || '',
+        email:        email,
+        phone:        phone,
+        phone_number: phone,
+        phoneNumber:  phone,
       });
+      const bookIframe = document.getElementById('qm-booking-iframe');
+      if (bookIframe) {
+        bookIframe.src = 'https://crm.clarityadvisor.au/widget/booking/O4sOXXeLuFvCYic2BkXA?' + params.toString();
+      }
+      if (window._showModalStep) window._showModalStep(4);
     });
   });
 })();
+
+/* ============================================================
+   MODAL BOOKING IFRAME — auto-resize via GHL postMessage
+   ============================================================ */
+window.addEventListener('message', function (e) {
+  var iframe = document.getElementById('qm-booking-iframe');
+  if (!iframe || !iframe.src) return;
+  try {
+    var data = (typeof e.data === 'string') ? JSON.parse(e.data) : e.data;
+    var h = data && (data.height || data.value || (data.data && data.data.height));
+    if (h && parseInt(h) > 100) {
+      iframe.style.height = (parseInt(h) + 60) + 'px';
+    }
+  } catch (_) {}
+});
 
 /* ============================================================
    FAQ ACCORDION
@@ -336,6 +402,7 @@ if (howSteps) {
    ============================================================ */
 document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener('click', e => {
+    if (link.hasAttribute('data-open-modal')) { e.preventDefault(); return; } // modal IIFE handles these
     const id = link.getAttribute('href');
     if (id === '#') return;
     const target = document.querySelector(id);
